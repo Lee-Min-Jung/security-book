@@ -17,46 +17,9 @@ import java.util.concurrent.Executors;
 public class HelloController {
 
     @GetMapping("/hello")
-    public String hello(Authentication a){
-        return "hello" + a.getName() + "!";
+    public String hello(){
+        return "hello";
     }
 
-    @GetMapping("/bye")
-    @Async
-    public String goodBye(){
-        SecurityContext context = SecurityContextHolder.getContext();
-        String username = context.getAuthentication().getName();
-        return "bye" + username;
-    }
 
-    @GetMapping("/ciao")
-    public String ciao() throws Exception{
-        Callable<String> task = () -> {
-            SecurityContext context = SecurityContextHolder.getContext();
-            return context.getAuthentication().getName();
-        };
-        ExecutorService e = Executors.newCachedThreadPool();
-        try {
-            var contextTask = new DelegatingSecurityContextCallable<>(task);
-            return "Ciao, " + e.submit(contextTask).get() + "!";
-        } finally {
-            e.shutdown();
-        }
-    }
-
-    @GetMapping("/hola")
-    public String hola() throws Exception {
-        Callable<String> task = () -> {
-            SecurityContext context = SecurityContextHolder.getContext();
-            return context.getAuthentication().getName();
-        };
-
-        ExecutorService e = Executors.newCachedThreadPool();
-        e = new DelegatingSecurityContextExecutorService(e);
-        try {
-            return "Hola, " + e.submit(task).get() + "!";
-        } finally {
-            e.shutdown();
-        }
-    }
 }
