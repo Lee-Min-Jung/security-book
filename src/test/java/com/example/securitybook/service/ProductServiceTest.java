@@ -1,6 +1,7 @@
 package com.example.securitybook.service;
 
 import com.example.securitybook.entity.Product;
+import com.example.securitybook.entity.enums.Currency;
 import com.example.securitybook.repository.ProductRepository;
 import com.example.securitybook.repository.UserRepository;
 
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +33,17 @@ class ProductServiceTest {
 
         //When
         List<Product> productList = productService.findAll();
+        //Then
+        Assertions.assertThat(productList).isEqualTo(productRepository.findAll());
+    }
+
+    @Test
+    public void 제품목록오류() throws Exception{
+        //Given
+        Product p = new Product(10, "apple", 10, Currency.USD);
+        //When
+        List<Product> productList = new ArrayList<>();
+        productList.add(p);
         //Then
         Assertions.assertThat(productList).isEqualTo(productRepository.findAll());
     }
