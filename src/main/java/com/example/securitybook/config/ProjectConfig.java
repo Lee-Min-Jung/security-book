@@ -33,7 +33,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.httpBasic();
+        http.formLogin().defaultSuccessUrl("/main");
         http.authorizeRequests().anyRequest().authenticated();
     }
 }
