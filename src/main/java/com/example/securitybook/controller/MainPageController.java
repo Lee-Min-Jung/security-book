@@ -13,4 +13,14 @@ public class MainPageController {
     public String hello(){
         return "hello!";
     }
+
+    @GetMapping("/ciao")
+    public String ciao(){
+        return "ciao!";
+    }
+
+    @GetMapping("/hola")
+    public String hola(){
+        return "hola!";
+    }
 }

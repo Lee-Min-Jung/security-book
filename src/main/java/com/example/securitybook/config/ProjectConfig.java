@@ -41,8 +41,15 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic();
 
+//        http.authorizeRequests()
+//                .mvcMatchers("/hello").hasRole("ADMIN")
+//                .mvcMatchers("/ciao").hasRole("MANAGER")
+//                .anyRequest().permitAll(); 인증이 안 된 사용자에게도 나머지 모든 요청 허용
+
         http.authorizeRequests()
-                .anyRequest().hasRole("ADMIN");
+                .mvcMatchers("/hello").hasRole("ADMIN")
+                .mvcMatchers("/ciao").hasRole("MANAGER")
+                .anyRequest().authenticated(); // 인증된 사용자에게만 나머지 모든 요청 허용
 
     }
 }
