@@ -11,8 +11,8 @@ import java.util.List;
 @RestController
 public class MainPageController {
 
-    @GetMapping("/hello")
-    public String productCode() {
-        return "hello";
+    @GetMapping("/video/{country}/{language}")
+    public String video(@PathVariable String country, @PathVariable String language) {
+        return "Video allowed for" + country + " " + language;
     }
 }

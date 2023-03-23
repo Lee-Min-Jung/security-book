@@ -20,11 +20,11 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
         var user1 = User.withUsername("john")
                 .password("12345")
-                .roles("ADMIN")
+                .authorities("read")
                 .build();
         var user2 = User.withUsername("jane")
                 .password("12345")
-                .roles("MANAGER")
+                .authorities("read", "premium")
                 .build();
 
         manager.createUser(user1);
@@ -43,6 +43,8 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic();
 
         http.authorizeRequests()
-                .antMatchers("/hello").authenticated();
+                .regexMatchers(".*/(us|uk|ca)+/(en|fr).*")
+                .authenticated()
+                .anyRequest().hasAuthority("premium");
     }
 }
