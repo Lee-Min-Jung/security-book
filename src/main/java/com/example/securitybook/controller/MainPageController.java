@@ -11,8 +11,8 @@ import java.util.List;
 @RestController
 public class MainPageController {
 
-    @GetMapping("/product/{code}")
-    public String productCode(@PathVariable String code) {
-        return code;
+    @GetMapping("/hello")
+    public String productCode() {
+        return "hello";
     }
 }
