@@ -1,12 +1,13 @@
 package com.example.securitybook.config;
 
 
-import com.example.securitybook.filter.AuthenticationLoggingFilter;
-import com.example.securitybook.filter.RequestValidationFilter;
+
+import com.example.securitybook.filter.CsrfTokenLogger;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 @Configuration
 public class ProjectConfig extends WebSecurityConfigurerAdapter {
@@ -16,14 +17,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(
-                        new RequestValidationFilter(),
-                        BasicAuthenticationFilter.class)
-                .addFilterAfter(
-                        new AuthenticationLoggingFilter(),
-                        BasicAuthenticationFilter.class)
-                .authorizeRequests()
-                .anyRequest()
-                .permitAll();
+        http.addFilterAfter(new CsrfTokenLogger(), CsrfFilter.class)
+                .authorizeRequests().anyRequest().permitAll();
     }
 }
